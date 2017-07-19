@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">美女音乐相册</string>
+    <string name="title_activity_updata_log">更新日志</string>
+    <string name="file_provider">com.nilin.favoritealbums.updata</string>
+    <string name="about_bottom_text">Copyright © 2017 Nilin.\nAll Rights Reserved.</string>
+    <string name="project_home">项目主页</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="about_text">云想衣裳花想容，春风拂槛露华浓</string>
+    <string name="song_title">告白气球</string>
+    <string name="nav_header_title">图以养目，乐以清心。</string>
+
+</resources>

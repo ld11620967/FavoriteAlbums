@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/updata"
+            android:icon="@drawable/nav_updata"
+            android:title="检查更新" />
+        <item
+            android:id="@+id/change_theme"
+            android:icon="@drawable/nav_change_theme"
+            android:title="更换主题" />
+        <item
+            android:id="@+id/updata_log"
+            android:icon="@drawable/nav_updata_log"
+            android:title="更新日志" />
+        <item
+            android:id="@+id/about"
+            android:icon="@drawable/nav_about"
+            android:title="关于" />
+    </group>
+</menu>
