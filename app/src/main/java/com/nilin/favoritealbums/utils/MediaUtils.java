@@ -1,9 +1,5 @@
 package com.nilin.favoritealbums.utils;
 
-import android.provider.MediaStore;
-
-import com.nilin.favoritealbums.PlayService;
-
 
 /**
  * Created by nilin on 17/2/23.

@@ -1,5 +1,6 @@
 package com.nilin.favoritealbums;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,21 +17,11 @@ import android.widget.TextView;
 public class SplashActivity extends Activity {
 
     private final static int TIME = 1200;
-
     private final static int GO_HOME = 101;
-
     ImageView welcomeImg,imageLove;
-
     TextView textView;
-
-    private Animation imgAnimation;
-
-    private Animation textAnimation;
-
-//    View view;
-
     private Intent intent = new Intent();
-
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -62,8 +53,8 @@ public class SplashActivity extends Activity {
         imageLove= (ImageView) findViewById(R.id.welcomeLove);
         textView= (TextView) findViewById(R.id.welcomeText);
 
-        imgAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
-        textAnimation = AnimationUtils.loadAnimation(this, R.anim.alpha_anim);
+        Animation imgAnimation = AnimationUtils.loadAnimation(this, R.anim.scale_anim);
+        Animation textAnimation = AnimationUtils.loadAnimation(this, R.anim.alpha_anim);
         welcomeImg.startAnimation(imgAnimation);
         imageLove.startAnimation(imgAnimation);
         textView.startAnimation(textAnimation);

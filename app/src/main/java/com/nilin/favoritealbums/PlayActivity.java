@@ -1,6 +1,7 @@
 package com.nilin.favoritealbums;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,8 +38,6 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener, 
     private static final float BITMAP_SCALE = 0.5f;     //背景图片缩放
     private static final float BLUR_RADIUS = 25f;       //背景图片高斯模糊程度
     View background;
-    private Bitmap sampleImg;
-    private Bitmap gaussianBlurImg;
     ImageButton imageButton_pause, imageButton_stop, imageButton_back, imageButton_start;
     TextView musicStatus, musicTime;
     SeekBar seekBar;
@@ -52,18 +51,18 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener, 
         setContentView(activity_music);
         //歌词背景高斯模糊
         background = findViewById(R.id.music_background);
-        sampleImg = BitmapFactory.decodeResource(getResources(), R.drawable.p32); // 获取原图
-        gaussianBlurImg = Bblur(this, sampleImg);
+        Bitmap sampleImg = BitmapFactory.decodeResource(getResources(), R.drawable.p32);
+        Bitmap gaussianBlurImg = Bblur(this, sampleImg);
         BitmapDrawable bg = new BitmapDrawable(gaussianBlurImg);
         background.setBackground(bg);
 
-        seekBar = (SeekBar) this.findViewById(R.id.MusicSeekBar);
-        musicStatus = (TextView) this.findViewById(R.id.MusicStatus);
-        musicTime = (TextView) this.findViewById(R.id.MusicTime);
-        imageButton_start = (ImageButton) findViewById(R.id.ib_play_start);
-        imageButton_pause = (ImageButton) findViewById(R.id.ib_play_pause);
-        imageButton_stop = (ImageButton) findViewById(R.id.ib_play_stop);
-        imageButton_back = (ImageButton) findViewById(R.id.iv_play_back);
+        seekBar = this.findViewById(R.id.MusicSeekBar);
+        musicStatus = this.findViewById(R.id.MusicStatus);
+        musicTime = this.findViewById(R.id.MusicTime);
+        imageButton_start = findViewById(R.id.ib_play_start);
+        imageButton_pause = findViewById(R.id.ib_play_pause);
+        imageButton_stop = findViewById(R.id.ib_play_stop);
+        imageButton_back = findViewById(R.id.iv_play_back);
 
         imageButton_start.setOnClickListener(this);
         imageButton_pause.setOnClickListener(this);
@@ -73,7 +72,7 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener, 
         myHandler = new MyHandler(this);
 
         //显示歌词
-        lrcView = (LrcView) findViewById(R.id.lrcView);
+        lrcView = findViewById(R.id.lrcView);
         String lrc = getFromAssets("lyric.lrc");
         ILrcBuilder builder = new DefaultLrcBuilder();
         List<LrcRow> rows = builder.getLrcRows(lrc);
@@ -103,7 +102,7 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener, 
     static class MyHandler extends Handler {
         private PlayActivity playActivity;
 
-        public MyHandler(PlayActivity playActivity) {
+        MyHandler(PlayActivity playActivity) {
             this.playActivity = playActivity;
         }
 
@@ -136,6 +135,7 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener, 
         seekBar.setMax(playService.getDuration());//设置进度条最大值为MP3总时间
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -185,13 +185,13 @@ public class PlayActivity extends BaseActivity implements View.OnClickListener, 
             InputStreamReader inputReader = new InputStreamReader(getResources().getAssets().open(fileName));
             BufferedReader bufReader = new BufferedReader(inputReader);
             String line = "";
-            String Result = "";
+            StringBuilder Result = new StringBuilder();
             while ((line = bufReader.readLine()) != null) {
                 if (line.trim().equals(""))
                     continue;
-                Result += line + "\r\n";
+                Result.append(line).append("\r\n");
             }
-            return Result;
+            return Result.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }

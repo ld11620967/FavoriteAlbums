@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 public class UpdataLogActivity extends BaseActivity {
 
@@ -17,13 +18,13 @@ public class UpdataLogActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_updata_log);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("更新日志");
         setSupportActionBar(toolbar);
         //返回按钮
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        textView = (TextView) findViewById(R.id.update_log_text);
+        textView = findViewById(R.id.update_log_text);
         String lrc = getFromAssets("updata_log.txt");
         textView.setText(lrc);
     }
@@ -54,12 +55,11 @@ public class UpdataLogActivity extends BaseActivity {
             InputStreamReader inputReader = new InputStreamReader(getResources().getAssets().open(fileName));
             BufferedReader bufReader = new BufferedReader(inputReader);
             String line = "";
-            String Result = "";
+            StringBuilder Result = new StringBuilder();
             while ((line = bufReader.readLine()) != null) {
-                Result = Result+line + "\r\n";
-                    continue;
+                Result.append(line).append("\r\n");
             }
-            return Result;
+            return Result.toString();
         } catch (Exception e) {
             e.printStackTrace();
         }

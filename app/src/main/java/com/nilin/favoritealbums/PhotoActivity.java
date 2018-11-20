@@ -1,11 +1,12 @@
 package com.nilin.favoritealbums;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.view.*;
 import android.widget.ImageView;
 import android.app.*;
@@ -17,12 +18,11 @@ import android.support.v4.view.ViewPager;
 public class PhotoActivity extends Activity {
 
 
-    private ViewPager viewPager;
-
     private int[] images;   //图片ID数组
 
     private PointF startPoint = new PointF();
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
 
     public void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class PhotoActivity extends Activity {
 
         setContentView(R.layout.activity_photo);
 
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        ViewPager viewPager = findViewById(R.id.viewPager);
 
         images = new int[]{R.drawable.p1, R.drawable.p2, R.drawable.p3, R.drawable.p4,
                 R.drawable.p5, R.drawable.p6, R.drawable.p7, R.drawable.p8, R.drawable.p9,
@@ -50,15 +50,13 @@ public class PhotoActivity extends Activity {
                 return images.length;
             }
 
-            public boolean isViewFromObject(View arg0, Object arg1) {
+            public boolean isViewFromObject(@NonNull View arg0, @NonNull Object arg1) {
                 return arg0 == arg1;
             }
 
-            public void destroyItem(ViewGroup container, int position, Object object) {
+            public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
                 View v = (View) object;
-                if (v == null)
-                    return;
-                ImageView iv = (ImageView) v.findViewById(R.id.viewPager);
+                ImageView iv = v.findViewById(R.id.viewPager);
                 releaseImageViewResourse(iv);
                 container.removeView(v);
             }
@@ -67,12 +65,11 @@ public class PhotoActivity extends Activity {
                 if (iv == null)
                     return;
                 Drawable drawable = iv.getDrawable();
-                if (drawable != null && drawable instanceof BitmapDrawable) {
+                if (drawable instanceof BitmapDrawable) {
                     BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
                     Bitmap bitmap = bitmapDrawable.getBitmap();
                     if (bitmap != null && !bitmap.isRecycled()) {
                         bitmap.recycle();
-                        bitmap = null;
                     }
                 }
                 //希望做一次垃圾回收
@@ -80,7 +77,7 @@ public class PhotoActivity extends Activity {
             }
 
             //设置ViewPager指定位置要显示的view
-
+            @NonNull
             public Object instantiateItem(ViewGroup container, int position) {
                 ImageView im = new ImageView(PhotoActivity.this);
                 im.setImageResource(images[position]);

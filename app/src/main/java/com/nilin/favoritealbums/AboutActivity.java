@@ -20,12 +20,12 @@ public class AboutActivity extends BaseActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("关于");
         setSupportActionBar(toolbar);
         //返回按钮
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        home_btn = (Button) findViewById(R.id.project_home_btn);
+        home_btn = findViewById(R.id.project_home_btn);
         home_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

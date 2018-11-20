@@ -1,9 +1,11 @@
 package com.nilin.favoritealbums;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +20,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends BaseActivity {
@@ -43,13 +46,8 @@ public class MainActivity extends BaseActivity {
             new Photo(R.drawable.p37), new Photo(R.drawable.p38)};
 
     private List<Photo> photosList = new ArrayList<>();
-
-    private PhotoAdapter adapter;
-
     private long mExitTime = 0;
-
     boolean isExit = false;
-
     private Toast mytoast;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -64,17 +62,17 @@ public class MainActivity extends BaseActivity {
     }
 
     public void initView() {
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new PhotoAdapter(photosList);
+        PhotoAdapter adapter = new PhotoAdapter(photosList);
         recyclerView.setAdapter(adapter);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navView = findViewById(R.id.nav_view);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -84,7 +82,7 @@ public class MainActivity extends BaseActivity {
 
             SharedPreferences.Editor editor = settings.edit();
 
-            public boolean onNavigationItemSelected(MenuItem item) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.updata:
 //                        PgyUpdateManager.register(MainActivity.this, getString(R.string.file_provider));
@@ -102,7 +100,7 @@ public class MainActivity extends BaseActivity {
                                 switch (which) {
                                     case 0:
                                         editor.putInt("name", 0);
-                                        editor.commit();
+                                        editor.apply();
                                         recreate();
                                         break;
                                     case 1:
@@ -159,7 +157,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,9 +193,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initPhotos() {
-        for (int i = 0; i < photos.length; i++) {
-            photosList.add(photos[i]);
-        }
+        photosList.addAll(Arrays.asList(photos));
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -223,6 +219,7 @@ public class MainActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @SuppressLint("ShowToast")
     public void DisplayToast(String str) {
         if (mytoast == null) {
             mytoast = Toast.makeText(this, str, Toast.LENGTH_SHORT);

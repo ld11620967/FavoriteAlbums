@@ -39,6 +39,7 @@
             android:layout_margin="16dp"
             android:src="@drawable/ic_music"
             app:layout_behavior="com.nilin.favoritealbums.behavior.ScrollAwareFABBehavior"/>
+
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.NavigationView
